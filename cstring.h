@@ -1,0 +1,24 @@
+#pragma once
+
+#include <stdbool.h>
+#include <stdlib.h>
+
+// allocates a string buffer with enough memory for len characters 
+// __and__ a null terminating character.
+// This means the length of the returned buffer, if not null, will be len + 1.
+// This function will also null-terminate the string buffer for you.
+// If a buffer could not be acquired, NULL will be returned.
+char* cstralloc(size_t len);
+
+// Appends up to count characters from the src string into the
+// dest buffer and null terminate the destination buffer.
+// To append the entire string, either pass in the length
+// of the src string if it is known or 0.
+// The dest_hint parameter is the size of the dest buffer if it is known. Pass
+// in the length of the dest buffer if it is known or 0 to have the function figure it out.
+// If the length of the dest buffer is known, this can cause potential performance gains
+// since the function can immediately figure out where to start copying into the destination.
+// This function expects that dest contains enough memory to hold all of
+// the characters requested from src and that src and dest point to the beginning of valid string buffers.
+// The function returns the number of characters actually appended to the string. 
+size_t cstrapp(char *dest, const char *src, size_t count, size_t dest_hint);

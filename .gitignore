@@ -1,0 +1,12 @@
+# Ignore build directory
+build/
+
+# Ignore bin
+*.o
+
+# Ignore temp files
+*.swp
+.fuse*
+
+# Ignore the main test file
+test/alltests.c
