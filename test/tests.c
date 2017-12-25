@@ -91,3 +91,23 @@ void TestIsPrefixShouldBeFalse(CuTest *c)
     const char *base = "thisisastring";
     CuAssertTrue(c, !cstr_is_prefix(base, "abc"));
 }
+
+void TestFindStringShouldBeTrue(CuTest *c)
+{
+    CuAssertTrue(c, cstr_find("thisisa  string", "isa") != NULL);
+}
+
+void TestFindStringShouldBeFalse(CuTest *c)
+{
+    CuAssertTrue(c, cstr_find("thisisa  string", "xxx") == NULL);
+}
+
+void TestContainsStringShouldBeTrue(CuTest *c)
+{
+    CuAssertTrue(c, cstr_contains("thisisa  string", "isa"));
+}
+
+void TestContainsStringShouldBeFalse(CuTest *c)
+{
+    CuAssertTrue(c, !cstr_contains("thisisa  string", "xxx"));
+}

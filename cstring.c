@@ -45,3 +45,13 @@ bool cstr_is_prefix(const char *base, const char *pre)
     }
     return true;
 }
+
+char* cstr_find(const char *base, const char *str)
+{
+    return strstr(base, str);
+}
+
+bool cstr_contains(const char *base, const char *str)
+{
+    return cstr_find(base, str) != NULL;
+}
