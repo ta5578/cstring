@@ -111,3 +111,15 @@ void TestContainsStringShouldBeFalse(CuTest *c)
 {
     CuAssertTrue(c, !cstr_contains("thisisa  string", "xxx"));
 }
+
+void TestCopyFullString(CuTest *c)
+{
+    char *copy = cstr_copy("tamer", 0);
+    CuAssertIntEquals(c, 5, strlen(copy));
+}
+
+void TestCopySubString(CuTest *c)
+{
+    char *copy = cstr_copy("tamer", 3);
+    CuAssertIntEquals(c, 3, strlen(copy));
+}

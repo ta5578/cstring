@@ -55,3 +55,16 @@ bool cstr_contains(const char *base, const char *str)
 {
     return cstr_find(base, str) != NULL;
 }
+
+char* cstr_copy(const char *str, size_t count)
+{
+    if (count == 0) {
+        count = strlen(str);
+    }
+
+    char *copy = cstralloc(count);
+    if (copy) {
+        strncpy(copy, str, count); 
+    }
+    return copy;
+}

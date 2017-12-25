@@ -36,3 +36,10 @@ char* cstr_find(const char *base, const char *str);
 // Note that this is the same as doing the following:
 //     cstr_find("foo", "bar") != NULL
 bool cstr_contains(const char *base, const char *str);
+
+// Returns a pointer to a string that contains a copy of up to 
+// count characters from the src string. The pointer points to a dynamically
+// allocated string and the client is responsible for managing it. 
+// If a copy of the full string is requested, pass in 0 for the count.
+// This function expects that str points to a valid null-terminated string buffer.
+char* cstr_copy(const char *str, size_t count);
