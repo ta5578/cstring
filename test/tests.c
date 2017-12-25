@@ -79,3 +79,15 @@ void TestAppendSubStringWithCountGreaterThanStringLength(CuTest *c)
     CuAssertTrue(c, strlen(buf) == len1 + len2);
     CuAssertTrue(c, appended == len2);
 }
+
+void TestIsPrefixShouldBeTrue(CuTest *c)
+{
+    const char *base = "thisisastring";
+    CuAssertTrue(c, cstr_is_prefix(base, "this"));
+}
+
+void TestIsPrefixShouldBeFalse(CuTest *c)
+{
+    const char *base = "thisisastring";
+    CuAssertTrue(c, !cstr_is_prefix(base, "abc"));
+}

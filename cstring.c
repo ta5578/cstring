@@ -34,3 +34,14 @@ size_t cstrapp(char *dest, const char *src, size_t count, size_t dest_hint)
    *dest = '\0';
    return amnt; 
 }
+
+bool cstr_is_prefix(const char *base, const char *pre)
+{
+    assert(base); assert(pre);
+    while (*base && *pre) {
+        if (*base++ != *pre++) {
+             return false;
+        }
+    }
+    return true;
+}

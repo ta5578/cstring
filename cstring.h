@@ -22,3 +22,7 @@ char* cstralloc(size_t len);
 // the characters requested from src and that src and dest point to the beginning of valid string buffers.
 // The function returns the number of characters actually appended to the string. 
 size_t cstrapp(char *dest, const char *src, size_t count, size_t dest_hint);
+
+// Determines if pre is a prefix of the string pointed to by base.
+// This function expects that pre and base point to the beginning of valid string buffers.
+bool cstr_is_prefix(const char *base, const char *pre);
