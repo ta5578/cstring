@@ -10,7 +10,7 @@ void TestAppendEntireStringNoHint(CuTest *c)
     size_t len2 = strlen(other);
 
     char *buf = cstr_alloc(len1 + len2);
-    size_t appended = cstrapp(buf, other, 0, 0);
+    size_t appended = cstr_app(buf, other, 0, 0);
 
     CuAssertStrEquals(c, "tamer", buf);
     CuAssertTrue(c, strlen(buf) == len2);
@@ -25,7 +25,7 @@ void TestAppendSubStringNoHint(CuTest *c)
     size_t len2 = strlen(other);
 
     char *buf = cstr_alloc(len1 + len2);
-    size_t appended = cstrapp(buf, other, 2, 0);
+    size_t appended = cstr_app(buf, other, 2, 0);
 
     CuAssertStrEquals(c, "ta", buf);
     CuAssertTrue(c, strlen(buf) == 2);
@@ -41,7 +41,7 @@ void TestAppendEntireStringWithHint(CuTest *c)
 
     char *buf = cstr_alloc(len1 + len2);
     strcpy(buf, str);
-    size_t appended = cstrapp(buf, other, 0, len1);
+    size_t appended = cstr_app(buf, other, 0, len1);
 
     CuAssertStrEquals(c, "testingtamer", buf);
     CuAssertTrue(c, strlen(buf) == len1 + len2);
@@ -57,7 +57,7 @@ void TestAppendSubStringWithHint(CuTest *c)
 
     char *buf = cstr_alloc(len1 + len2);
     strcpy(buf, str);
-    size_t appended = cstrapp(buf, other, 3, len1);
+    size_t appended = cstr_app(buf, other, 3, len1);
 
     CuAssertStrEquals(c, "testingtam", buf);
     CuAssertTrue(c, strlen(buf) == len1 + 3);
@@ -73,7 +73,7 @@ void TestAppendSubStringWithCountGreaterThanStringLength(CuTest *c)
 
     char *buf = cstr_alloc(len1 + len2);
     strcpy(buf, str);
-    size_t appended = cstrapp(buf, other, 10, len1);
+    size_t appended = cstr_app(buf, other, 10, len1);
 
     CuAssertStrEquals(c, "testingtamer", buf);
     CuAssertTrue(c, strlen(buf) == len1 + len2);

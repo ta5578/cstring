@@ -35,7 +35,7 @@ char* cstr_alloc(size_t len)
     return s;
 }
 
-size_t cstrapp(char *dest, const char *src, size_t count, size_t dest_hint)
+size_t cstr_app(char *dest, const char *src, size_t count, size_t dest_hint)
 {
    assert(dest); assert(src);
    
