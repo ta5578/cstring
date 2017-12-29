@@ -43,3 +43,26 @@ bool cstr_contains(const char *base, const char *str);
 // If a copy of the full string is requested, pass in 0 for the count.
 // This function expects that str points to a valid null-terminated string buffer.
 char* cstr_copy(const char *str, size_t count);
+
+// Splits the str string via the token string and updates toks to an array of tokens
+// and count with the number of tokens returned.
+// Note that the toks parameter will be updated with dynamically allocated memory
+// which the client is responsible for handling after the function call.
+// If the function fails to allocate memory at any point, the function will return
+// false but will still update the toks and count parameters with as many strings
+// as it could handle before failing. This means that if the function returns true,
+// it guarantees that the token list is complete. If the function returns false,
+// the token list is probably incomplete. See below for example usage.
+// The function expects that all parameters point to valid addresses.
+// Example:
+//    char **tokens = NULL;
+//    size_t num = 0;
+//    if (!cstr_split("this is a sentence", " ", &tokens, &num)) {
+//          LOG_WARN("Couldn't handle a memory request. TOken list incomplete");
+//    }
+//    for (size_t i = 0; i < num; ++i) {
+//        puts(tokens[i]);
+//        free(tokens[i]);
+//    }
+//    free(tokens);
+bool cstr_split(const char *str, const char *token, char ***toks, size_t *count);

@@ -123,3 +123,57 @@ void TestCopySubString(CuTest *c)
     char *copy = cstr_copy("tamer", 3);
     CuAssertIntEquals(c, 3, strlen(copy));
 }
+
+void TestSplitStringBySpaces(CuTest *c)
+{
+    size_t count = 0;
+    char **tokens = NULL;
+    CuAssertTrue(c, cstr_split("this is a sentence", " ", &tokens, &count));
+
+    CuAssertIntEquals(c, 4, count); 
+    CuAssertStrEquals(c, "this", tokens[0]);
+    CuAssertStrEquals(c, "is", tokens[1]);
+    CuAssertStrEquals(c, "a", tokens[2]);
+    CuAssertStrEquals(c, "sentence", tokens[3]);
+
+    for (size_t i = 0; i < count; ++i) {
+        free(tokens[i]);
+    }
+    free(tokens);
+}
+
+void TestSplitStringUsingStringNotExisting(CuTest *c)
+{
+    size_t count = 0;
+    char **tokens = NULL;
+    CuAssertTrue(c, cstr_split("this is a sentence", "xyz", &tokens, &count));
+
+    CuAssertIntEquals(c, 0, count); 
+    CuAssertPtrEquals(c, NULL, tokens);
+}
+
+void TestSplitStringByContainingCharacter(CuTest *c)
+{
+    size_t count = 0;
+    char **tokens = NULL;
+    CuAssertTrue(c, cstr_split("cstring", "t", &tokens, &count));
+
+    CuAssertIntEquals(c, 2, count); 
+    CuAssertStrEquals(c, "cs", tokens[0]);
+    CuAssertStrEquals(c, "ring", tokens[1]);
+
+    for (size_t i = 0; i < count; ++i) {
+        free(tokens[i]);
+    }
+    free(tokens);
+}
+
+void TestSplitStringByNonContainingCharacter(CuTest *c)
+{
+    size_t count = 0;
+    char **tokens = NULL;
+    CuAssertTrue(c, cstr_split("cstring", "x", &tokens, &count));
+
+    CuAssertIntEquals(c, 0, count); 
+    CuAssertPtrEquals(c, NULL, tokens);
+}
