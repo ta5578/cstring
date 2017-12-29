@@ -132,17 +132,22 @@ done:
     return isSuccess;
 }
 
-void cstr_remove_char(char *str, char c)
+size_t cstr_remove_char(char *str, char c)
 {
     assert(str);
+
     char *pw = str;
+    size_t count = 0;
     while (*str) {
         *pw = *str++;
         if (*pw != c) {
             ++pw;
+        } else {
+            ++count;
         }
     }
     *pw = '\0';
+    return count;
 }
 
 size_t cstr_replace_char(char *str, char before, char after)
