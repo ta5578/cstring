@@ -173,3 +173,33 @@ size_t cstr_replace_char(char *str, char before, char after)
     }
     return count;
 }
+
+size_t cstr_remove_str(char *base, const char *pattern)
+{
+    assert(base); assert(pattern);
+    
+    if (base == pattern) {
+        *base = '\0';
+        return 0;
+    }
+
+    const size_t pat_len = strlen(pattern);
+    if (pat_len == 0) {
+        return 0;
+    }
+    if (pat_len == 1) {
+        return cstr_remove_char(base, *pattern);
+    }
+    
+    // TODO: possible performance enhancement:
+    // consider checking if len(base) < len(pattern) and exit early
+
+    size_t count = 0;
+    char *tok = NULL;
+    while ((tok = cstr_find(base, pattern))) {
+        memmove(tok, tok + pat_len, pat_len * sizeof(*tok));
+        base = tok;
+        ++count;
+    }
+    return count;
+}

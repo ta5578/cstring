@@ -252,3 +252,45 @@ void TestReplaceNonExistingCharacterWithItself(CuTest *c)
     
     CuAssertStrEquals(c, "abc", test);
 }
+
+void TestRemoveExistingString(CuTest *c)
+{
+    char test[] = "this is a test";
+    CuAssertIntEquals(c, 1, cstr_remove_str(test, "test"));
+    CuAssertStrEquals(c, "this is a ", test);
+}
+
+void TestRemoveNonExistingString(CuTest *c)
+{
+    char test[] = "this is a test";
+    CuAssertIntEquals(c, 0, cstr_remove_str(test, "xyz"));
+    CuAssertStrEquals(c, "this is a test", test);
+}
+
+void TestRemoveEmptyString_ShouldReturnUnmodifiedString(CuTest *c)
+{
+    char test[] = "this is a test";
+    CuAssertIntEquals(c, 0, cstr_remove_str(test, ""));
+    CuAssertStrEquals(c, "this is a test", test);
+}
+
+void TestRemoveSameString_ShouldReturnEmptyString(CuTest *c)
+{
+    char test[] = "this is a test";
+    CuAssertIntEquals(c, 1, cstr_remove_str(test, "this is a test"));
+    CuAssertStrEquals(c, "", test);
+}
+
+void TestRemoveStringLongerThanBase_ShouldReturnUnmodifiedString(CuTest *c)
+{
+    char test[] = "this is a test";
+    CuAssertIntEquals(c, 0, cstr_remove_str(test, "this is a test 2"));
+    CuAssertStrEquals(c, "this is a test", test);
+}
+
+void TestRemoveSameInMemoryString_ShouldReturnEmptyString(CuTest *c)
+{
+    char test[] = "this is a test";
+    CuAssertIntEquals(c, 0, cstr_remove_str(test, test));
+    CuAssertStrEquals(c, "", test);
+}

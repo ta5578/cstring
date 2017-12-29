@@ -86,3 +86,9 @@ size_t cstr_remove_char(char *str, char c);
 // If before == after, the function returns 0.
 // This function expects that str points to a valid string buffer.
 size_t cstr_replace_char(char *str, char before, char after);
+
+// Removes all occurrences of the pattern string from the base string and returns
+// the number of removal operations that occurred (how many times pattern appeared
+// in base).
+// The function expects that both base and str point to valid string buffers.
+size_t cstr_remove_str(char *base, const char *pattern);
