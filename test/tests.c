@@ -1,6 +1,7 @@
 #include "cstring.h"
 #include "CuTest.h"
 #include <string.h>
+#include <stdlib.h>
 
 void TestAppendEntireStringNoHint(CuTest *c)
 {

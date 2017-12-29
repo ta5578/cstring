@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdbool.h>
-#include <stdlib.h>
+#include <stddef.h>
 
 // allocates a string buffer with enough memory for len characters 
 // __and__ a null terminating character.
