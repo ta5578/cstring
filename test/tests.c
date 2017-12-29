@@ -178,6 +178,21 @@ void TestSplitStringByNonContainingCharacter(CuTest *c)
     CuAssertPtrEquals(c, NULL, tokens);
 }
 
+void TestSplitStringByItself_ShouldReturnArrayOf1String(CuTest *c)
+{
+    size_t count = 0;
+    char **tokens = NULL;
+    CuAssertTrue(c, cstr_split("cstring", "cstring", &tokens, &count));
+
+    CuAssertIntEquals(c, 1, count); 
+    CuAssertStrEquals(c, "cstring", tokens[0]);
+    
+    for (size_t i = 0; i < count; ++i) {
+        free(tokens[i]);
+    }
+    free(tokens);
+}
+
 void TestRemoveCharExistingInString(CuTest *c)
 {
     char test[] = "test";

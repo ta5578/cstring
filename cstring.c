@@ -122,7 +122,7 @@ bool cstr_split(const char *str, const char *token, char ***toks, size_t *count)
     // If there were no tokens found, then we'd have the following:
     // "a sentence"
     //  |-> str
-    if (tokens.size > 0) {
+    if (*str && tokens.size > 0) {
         isSuccess = _cstr_arr_append(&tokens, cstr_copy(str, 0));
     }
 
