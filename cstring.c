@@ -131,3 +131,15 @@ done:
     *toks = tokens.arr;
     return isSuccess;
 }
+
+void cstr_remove_char(char *str, char c)
+{
+    char *pw = str;
+    while (*str) {
+        *pw = *str++;
+        if (*pw != c) {
+            ++pw;
+        }
+    }
+    *pw = '\0';
+}

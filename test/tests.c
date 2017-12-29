@@ -177,3 +177,35 @@ void TestSplitStringByNonContainingCharacter(CuTest *c)
     CuAssertIntEquals(c, 0, count); 
     CuAssertPtrEquals(c, NULL, tokens);
 }
+
+void TestRemoveCharExistingInString(CuTest *c)
+{
+    char test[] = "test";
+    cstr_remove_char(test, 't');
+
+    CuAssertStrEquals(c, "es", test);
+}
+
+void TestRemoveCharNotExistingInString(CuTest *c)
+{
+    char test[] = "cheese";
+    cstr_remove_char(test, 't');
+
+    CuAssertStrEquals(c, "cheese", test);
+}
+
+void TestRemoveCharFromEmptyString(CuTest *c)
+{
+    char test[] = "";
+    cstr_remove_char(test, 't');
+
+    CuAssertStrEquals(c, "", test);
+}
+
+void TestRemoveCharFromSingleCharString_ShouldBeEmpty(CuTest *c)
+{
+    char test[] = "t";
+    cstr_remove_char(test, 't');
+
+    CuAssertStrEquals(c, "", test);
+}

@@ -66,3 +66,7 @@ char* cstr_copy(const char *str, size_t count);
 //    }
 //    free(tokens);
 bool cstr_split(const char *str, const char *token, char ***toks, size_t *count);
+
+// Removes the provided character from the provided string
+// The function expects that str points to a valid string buffer.
+void cstr_remove_char(char *str, char c);
