@@ -8,7 +8,7 @@
 // This means the length of the returned buffer, if not null, will be len + 1.
 // This function will also null-terminate the string buffer for you.
 // If a buffer could not be acquired, NULL will be returned.
-char* cstralloc(size_t len);
+char* cstr_alloc(size_t len);
 
 // Appends up to count characters from the src string into the
 // dest buffer and null terminate the destination buffer.

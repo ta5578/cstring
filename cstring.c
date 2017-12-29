@@ -26,7 +26,7 @@ static bool _cstr_arr_append(_cstr_arr *arr, char *elem)
     return true;
 }
 
-char* cstralloc(size_t len)
+char* cstr_alloc(size_t len)
 {
     char *s = malloc(len + 1);
     if (s) {
@@ -86,7 +86,7 @@ char* cstr_copy(const char *str, size_t count)
         count = strlen(str);
     }
 
-    char *copy = cstralloc(count);
+    char *copy = cstr_alloc(count);
     if (copy) {
         strncpy(copy, str, count); 
     }
