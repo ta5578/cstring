@@ -10,6 +10,15 @@
 // If a buffer could not be acquired, NULL will be returned.
 char* cstr_alloc(size_t len);
 
+// Returns whether the two provided strings are equal.
+// Two strings are equal if:
+// 1) They point to the same buffer in memory
+// -- OR --
+// 1) They are the same length
+// 2) The same character exists in the same position for each string.
+// The function expects that both strings point to valid memory.
+bool cstr_equals(const char *s1, const char *s2);
+
 // Appends up to count characters from the src string into the
 // dest buffer and null terminate the destination buffer.
 // To append the entire string, either pass in the length

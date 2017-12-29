@@ -35,6 +35,12 @@ char* cstr_alloc(size_t len)
     return s;
 }
 
+bool cstr_equals(const char *s1, const char *s2)
+{
+    assert(s1); assert(s2);
+    return strcmp(s1, s2) == 0;
+}
+
 size_t cstr_app(char *dest, const char *src, size_t count, size_t dest_hint)
 {
    assert(dest); assert(src);
