@@ -134,6 +134,7 @@ done:
 
 void cstr_remove_char(char *str, char c)
 {
+    assert(str);
     char *pw = str;
     while (*str) {
         *pw = *str++;
@@ -142,4 +143,22 @@ void cstr_remove_char(char *str, char c)
         }
     }
     *pw = '\0';
+}
+
+size_t cstr_replace_char(char *str, char before, char after)
+{
+    assert(str);
+    if (before == after) {
+        return 0;
+    }
+
+    size_t count = 0;
+    while (*str) {
+        if (*str == before) {
+            *str = after;
+            ++count;
+        }
+        ++str;
+    }
+    return count;
 }

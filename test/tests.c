@@ -209,3 +209,35 @@ void TestRemoveCharFromSingleCharString_ShouldBeEmpty(CuTest *c)
 
     CuAssertStrEquals(c, "", test);
 }
+
+void TestReplaceCharacterExistingInString(CuTest *c)
+{
+    char test[] = "abc";
+    CuAssertIntEquals(c, 1, cstr_replace_char(test, 'a', 'x'));
+    
+    CuAssertStrEquals(c, "xbc", test);
+}
+
+void TestReplaceCharacterNotExistingInString(CuTest *c)
+{
+    char test[] = "abc";
+    CuAssertIntEquals(c, 0, cstr_replace_char(test, 'u', 'r'));
+    
+    CuAssertStrEquals(c, "abc", test);
+}
+
+void TestReplaceExistingCharacterWithItself(CuTest *c)
+{
+    char test[] = "abc";
+    CuAssertIntEquals(c, 0, cstr_replace_char(test, 'a', 'a'));
+    
+    CuAssertStrEquals(c, "abc", test);
+}
+
+void TestReplaceNonExistingCharacterWithItself(CuTest *c)
+{
+    char test[] = "abc";
+    CuAssertIntEquals(c, 0, cstr_replace_char(test, 'x', 'x'));
+    
+    CuAssertStrEquals(c, "abc", test);
+}

@@ -70,3 +70,9 @@ bool cstr_split(const char *str, const char *token, char ***toks, size_t *count)
 // Removes the provided character from the provided string
 // The function expects that str points to a valid string buffer.
 void cstr_remove_char(char *str, char c);
+
+// Replaces all occurrences of the before character with the after character
+// in the provided string and returns the number of characters replaced.
+// If before == after, the function returns 0.
+// This function expects that str points to a valid string buffer.
+size_t cstr_replace_char(char *str, char before, char after);
