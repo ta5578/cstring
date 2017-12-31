@@ -16,5 +16,5 @@ file(GLOB HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "cstring.h" "test/*.h")
 file(GLOB SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "cstring.c" "test/*.c")
 
 # We need to manually specify the generated test case to link with
-add_executable(cstring ${HEADERS} ${SOURCES})
-add_dependencies(cstring TestCString)
+add_executable(cstring_tests ${HEADERS} ${SOURCES})
+add_dependencies(cstring_tests TestCString)
