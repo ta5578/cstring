@@ -103,3 +103,8 @@ size_t cstr_replace_str(char *base, const char *before, const char *after);
 // Removes all leading and trailing white space in the provided string.
 // The function expects that str points to a valid character buffer.
 void cstr_trim(char *str);
+
+// Sorts the provided string using the provided order.
+// Order can be 0 for ascending or non-zero for descending.
+// The function expects that str points to valid character.
+void cstr_sort(char *str, int order);

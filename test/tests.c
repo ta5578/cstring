@@ -428,3 +428,45 @@ void TestTrimSpacesFromStringThatDoesntNeedTrimming(CuTest *c)
     cstr_trim(test);
     CuAssertStrEquals(c, "no trimming necessary.", test);
 }
+
+void TestSortStringAscendingNoDuplicates(CuTest *c)
+{
+    char test[] = "cstring";
+    cstr_sort(test, 0);
+    CuAssertStrEquals(c, "cginrst", test);
+}
+
+void TestSortStringDescendingNoDuplicates(CuTest *c)
+{
+    char test[] = "cstring";
+    cstr_sort(test, 1);
+    CuAssertStrEquals(c, "tsrnigc", test);
+}
+
+void TestSortStringAscendingWithDuplicates(CuTest *c)
+{
+    char test[] = "dddcccbbbaaa";
+    cstr_sort(test, 0);
+    CuAssertStrEquals(c, "aaabbbcccddd", test);
+}
+
+void TestSortStringDescendingWithDuplicates(CuTest *c)
+{
+    char test[] = "aaabbbcccddd";
+    cstr_sort(test, 1);
+    CuAssertStrEquals(c, "dddcccbbbaaa", test);
+}
+
+void TestSortEmptyStringAscending(CuTest *c)
+{
+    char test[] = "";
+    cstr_sort(test, 0);
+    CuAssertStrEquals(c, "", test);
+}
+
+void TestSortEmptyStringDescending(CuTest *c)
+{
+    char test[] = "";
+    cstr_sort(test, 1);
+    CuAssertStrEquals(c, "", test);
+}

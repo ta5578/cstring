@@ -296,3 +296,27 @@ void cstr_trim(char *str)
 
     *(start + 1) = '\0';
 }
+
+void cstr_sort(char *str, int order)
+{ 
+    size_t table[256];
+    memset(table, 0, 256 * sizeof(table[0]));
+
+    for (char *p = str; *p; ++p) {
+        ++table[(int)*p];
+    }
+
+    if (order == 0) { // Ascending
+        for (int i = 0; i < 256; ++i) {
+            for (size_t j = 0; j < table[i]; ++j) {
+                *str++ = (char)i;
+            }
+        }
+    } else { // Descending
+        for (int i = 256 - 1; i >= 0; --i) {
+            for (size_t j = 0; j < table[i]; ++j) {
+                *str++ = (char)i;
+            }
+        }
+    }
+}
