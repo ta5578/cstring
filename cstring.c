@@ -1,7 +1,7 @@
 #include "cstring.h"
 #include <assert.h>
 #include <string.h>
-#include <stdio.h>
+#include <stdlib.h>
 
 // Internal dynamic array data structure.
 typedef struct {
