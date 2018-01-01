@@ -470,3 +470,51 @@ void TestSortEmptyStringDescending(CuTest *c)
     cstr_sort(test, 1);
     CuAssertStrEquals(c, "", test);
 }
+
+void TestCountExistingChar(CuTest *c)
+{
+    char test[] = "this is a test.";
+    CuAssertIntEquals(c, 3, cstr_count_char(test, 't'));
+}
+
+void TestCountNonExistingChar(CuTest *c)
+{
+    char test[] = "this is a test.";
+    CuAssertIntEquals(c, 0, cstr_count_char(test, 'u'));
+}
+
+void TestCountCharEmptyString(CuTest *c)
+{
+    char test[] = "";
+    CuAssertIntEquals(c, 0, cstr_count_char(test, 'u'));
+}
+
+void TestCountExistingString(CuTest *c)
+{
+    char test[] = "this is a test.";
+    CuAssertIntEquals(c, 1, cstr_count_str(test, "test"));
+}
+
+void TestCountNonExistingString(CuTest *c)
+{
+    char test[] = "this is a test.";
+    CuAssertIntEquals(c, 0, cstr_count_str(test, "xyz"));
+}
+
+void TestCountStringEmptyString(CuTest *c)
+{
+    char test[] = "";
+    CuAssertIntEquals(c, 0, cstr_count_str(test, "xyz"));
+}
+
+void TestCountStringSingleCharacterString(CuTest *c)
+{
+    char test[] = "this is a test";
+    CuAssertIntEquals(c, 3, cstr_count_str(test, "t"));
+}
+
+void TestCountStringUsingEmptyPattern_ShouldReturn0(CuTest *c)
+{
+    char test[] = "this is a test.";
+    CuAssertIntEquals(c, 0, cstr_count_str(test, ""));
+}

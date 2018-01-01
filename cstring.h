@@ -108,3 +108,11 @@ void cstr_trim(char *str);
 // Order can be 0 for ascending or non-zero for descending.
 // The function expects that str points to valid character.
 void cstr_sort(char *str, int order);
+
+// Counts the number of times c occurs in str.
+// The function expects that str points to a valid string buffer.
+size_t cstr_count_ch(const char *str, char c);
+
+// Counts the number of times pattern occurs in str.
+// The function expects that both str and pattern point to valid string buffers.
+size_t cstr_count_str(const char *str, const char *pattern);

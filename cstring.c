@@ -320,3 +320,36 @@ void cstr_sort(char *str, int order)
         }
     }
 }
+
+size_t cstr_count_char(const char *str, char c)
+{
+    assert(str);
+
+    size_t count = 0;
+    while (*str) {
+        if (*str++ == c) { ++count; }
+    }
+    return count;
+}
+
+size_t cstr_count_str(const char *str, const char *pattern)
+{
+    assert(str); assert(pattern);
+
+    const size_t pat_len = strlen(pattern);
+    if (pat_len == 0) {
+        return 0;
+    }
+
+    if (pat_len == 1) {
+        return cstr_count_char(str, *pattern);    
+    }
+
+    size_t count = 0;
+    char *tok = NULL;
+    while ((tok = cstr_find(str, pattern))) {
+        ++count;
+        str = tok + pat_len;
+    }
+    return count;
+}
