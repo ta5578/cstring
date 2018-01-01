@@ -92,3 +92,10 @@ size_t cstr_replace_char(char *str, char before, char after);
 // in base).
 // The function expects that both base and str point to valid string buffers.
 size_t cstr_remove_str(char *base, const char *pattern);
+
+// Replaces all occurrences of the before string with the after string 
+// in the base string and returns the number of replace operations that occurred.
+// (how many times before appeared in base).
+// The function expects that base, before, and after point to valid string buffers
+// and that base holds enough memory to contain all of the replaced strings.
+size_t cstr_replace_str(char *base, const char *before, const char *after);

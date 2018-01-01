@@ -26,6 +26,30 @@ static bool _cstr_arr_append(_cstr_arr *arr, char *elem)
     return true;
 }
 
+static bool _cstr_cmp_lens(const char *s1, const char *s2, size_t *sz1, size_t *sz2)
+{
+    size_t l1 = 0, l2 = 0;
+    bool eq = true;
+    while (*s1 && *s2) {
+        ++l1;
+        ++l2;
+        if (*s1 != *s2) {
+            eq = false;
+        }
+        ++s1;
+        ++s2;
+    }
+
+    while (*s1++) { ++l1; }
+    while (*s2++) { ++l2; }
+
+    if (l1 != l2) { eq = false; }
+
+    *sz1 = l1;
+    *sz2 = l2;
+    return eq;
+}
+
 char* cstr_alloc(size_t len)
 {
     char *s = malloc(len + 1);
@@ -197,9 +221,61 @@ size_t cstr_remove_str(char *base, const char *pattern)
     size_t count = 0;
     char *tok = NULL;
     while ((tok = cstr_find(base, pattern))) {
-        memmove(tok, tok + pat_len, pat_len * sizeof(*tok));
+        // TODO: it is possible to optimize this by updating the length
+        // instead of repeatedly polling for it
+        size_t tail_len = strlen(tok); 
+        memmove(tok, tok + pat_len, tail_len);
         base = tok;
         ++count;
+    }
+    return count;
+}
+
+size_t cstr_replace_str(char *base, const char *before, const char *after)
+{
+    assert(base); assert(before); assert(after);
+    
+    size_t b_len = 0, a_len = 0;
+    // if the before and after string are equal, then there's no work to do
+    if (_cstr_cmp_lens(before, after, &b_len, &a_len)) {
+        return 0;
+    }
+
+    // we can't replace an empty string
+    if (b_len == 0) {
+        return 0;
+    }
+
+    // replacing a string with the empty string is like removing it
+    if (a_len == 0) {
+        return cstr_remove_str(base, before);
+    }
+
+    size_t count = 0;
+    char *tok = NULL;
+    if (b_len == a_len) {
+        while ((tok = cstr_find(base, before))) {
+            strncpy(tok, after, a_len);
+            base = tok + a_len;
+            ++count;
+        }
+    } else if (b_len > a_len) {
+       while ((tok = cstr_find(base, before))) {
+           strncpy(tok, after, a_len);
+           strcpy(tok + a_len, tok + b_len);
+           base = tok + a_len;
+           ++count;
+       }
+    } else {
+        while ((tok = cstr_find(base, before))) {
+            // TODO: should be able to optimize this by maintaining a running
+            // count of tail length instead of repeatedly polling for it
+            size_t tail_len = strlen(tok + b_len);
+            memmove(tok + a_len, tok + b_len, tail_len + 1);
+            strncpy(tok, after, a_len);
+            base = tok + a_len;
+            ++count;
+        }
     }
     return count;
 }

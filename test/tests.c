@@ -295,3 +295,101 @@ void TestRemoveSameInMemoryString_ShouldReturnEmptyString(CuTest *c)
     CuAssertIntEquals(c, 0, cstr_remove_str(test, test));
     CuAssertStrEquals(c, "", test);
 }
+
+void TestRemoveExistingStringInTheMiddle(CuTest *c)
+{
+    char test[] = "this is a big test.";
+    CuAssertIntEquals(c, 1, cstr_remove_str(test, "big"));
+    CuAssertStrEquals(c, "this is a  test.", test);
+}
+
+void TestRemoveExistingStringInTheBeginning(CuTest *c)
+{
+    char test[] = "this is a big test.";
+    CuAssertIntEquals(c, 1, cstr_remove_str(test, "this"));
+    CuAssertStrEquals(c, " is a big test.", test);
+}
+
+void TestRemoveMultipleStrings(CuTest *c)
+{
+    char test[] = "this is a big big test.";
+    CuAssertIntEquals(c, 2, cstr_remove_str(test, "big"));
+    CuAssertStrEquals(c, "this is a   test.", test);
+}
+
+void TestReplaceExistingStringWithEqualStringLengths(CuTest *c)
+{
+    char test[] = "this is a test";
+    CuAssertIntEquals(c, 1, cstr_replace_str(test, "test", "mess"));
+    CuAssertStrEquals(c, "this is a mess", test);
+}
+
+void TestReplaceExistingStringWithPatternShorterThanReplacement(CuTest *c)
+{
+    char test[] = "this is a test";
+    CuAssertIntEquals(c, 1, cstr_replace_str(test, "this", "cat"));
+    CuAssertStrEquals(c, "cat is a test", test);
+}
+
+void TestReplaceExistingStringWithPatternShorterThanReplacement2(CuTest *c)
+{
+    char test[] = "this is a test";
+    CuAssertIntEquals(c, 1, cstr_replace_str(test, "test", "cat"));
+    CuAssertStrEquals(c, "this is a cat", test);
+}
+
+void TestReplaceExistingStringWithPatternShorterThanReplacement3(CuTest *c)
+{
+    char test[] = "this is a gigantic test";
+    CuAssertIntEquals(c, 1, cstr_replace_str(test, "gigantic", "huge"));
+    CuAssertStrEquals(c, "this is a huge test", test);
+}
+
+void TestReplaceExistingStringWithPatternLongerThanReplacementInMiddle(CuTest *c)
+{
+    char test[] = "this is a big test.";
+    CuAssertIntEquals(c, 1, cstr_replace_str(test, "big", "huge"));
+    CuAssertStrEquals(c, "this is a huge test.", test);
+}
+
+void TestReplaceExistingStringWithPatternLongerThanReplacementAtEnd(CuTest *c)
+{
+    char test[] = "this is a big test..";
+    CuAssertIntEquals(c, 1, cstr_replace_str(test, "test", "abcde"));
+    CuAssertStrEquals(c, "this is a big abcde..", test);
+}
+
+void TestReplaceExistingStringWithPatternLongerThanReplacementAtBeginning(CuTest *c)
+{
+    char test[] = "this is a big test..";
+    CuAssertIntEquals(c, 1, cstr_replace_str(test, "this", "thank"));
+    CuAssertStrEquals(c, "thank is a big test..", test);
+}
+
+void TestReplaceExistingStringWithEmptyString_ShouldRemoveString(CuTest *c)
+{
+    char test[] = "this is a big test.";
+    CuAssertIntEquals(c, 1, cstr_replace_str(test, "big", ""));
+    CuAssertStrEquals(c, "this is a  test.", test);
+}
+
+void TestReplaceUsingEmptyString_ShouldNotModifyString(CuTest *c)
+{
+    char test[] = "this is a test.";
+    CuAssertIntEquals(c, 0, cstr_replace_str(test, "", "def"));
+    CuAssertStrEquals(c, "this is a test.", test);
+}
+
+void TestReplaceUsingEmptyBaseString_ShouldNotHaveReplacements(CuTest *c)
+{
+    char test[] = "";
+    CuAssertIntEquals(c, 0, cstr_replace_str(test, "abc", "def"));
+    CuAssertStrEquals(c, "", test);
+}
+
+void TestMultipleReplacements(CuTest *c)
+{
+    char test[] = "this is a big big change....";
+    CuAssertIntEquals(c, 2, cstr_replace_str(test, "big", "great"));
+    CuAssertStrEquals(c, "this is a great great change....", test);
+}
