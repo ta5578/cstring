@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 // Internal dynamic array data structure.
 typedef struct {
@@ -278,4 +279,20 @@ size_t cstr_replace_str(char *base, const char *before, const char *after)
         }
     }
     return count;
+}
+
+void cstr_trim(char *str)
+{
+    assert(str);
+    
+    char *start = str;
+    while (isspace(*start)) { ++start; }
+
+    if (start != str) { strcpy(str, start); }
+
+    while (*(start + 1)) { ++start; }
+
+    while (isspace(*start)) { -- start; }
+
+    *(start + 1) = '\0';
 }

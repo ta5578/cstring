@@ -393,3 +393,38 @@ void TestMultipleReplacements(CuTest *c)
     CuAssertIntEquals(c, 2, cstr_replace_str(test, "big", "great"));
     CuAssertStrEquals(c, "this is a great great change....", test);
 }
+
+void TestTrimLeadingSpacesFromString(CuTest *c)
+{
+    char test[] = "    this is a test.";
+    cstr_trim(test);
+    CuAssertStrEquals(c, "this is a test.", test);
+}
+
+void TestTrimTrailingSpacesFromString(CuTest *c)
+{
+    char test[] = "this is a test.      ";
+    cstr_trim(test);
+    CuAssertStrEquals(c, "this is a test.", test);
+} 
+
+void TestTrimLeadingAndTrailingSpacesFromString(CuTest *c)
+{
+    char test[] = "    this is a test.      ";
+    cstr_trim(test);
+    CuAssertStrEquals(c, "this is a test.", test);
+} 
+
+void TestTrimSpacesFromEmptyString(CuTest *c)
+{
+    char test[] = "";
+    cstr_trim(test);
+    CuAssertStrEquals(c, "", test);
+}
+
+void TestTrimSpacesFromStringThatDoesntNeedTrimming(CuTest *c)
+{
+    char test[] = "no trimming necessary.";
+    cstr_trim(test);
+    CuAssertStrEquals(c, "no trimming necessary.", test);
+}

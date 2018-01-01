@@ -99,3 +99,7 @@ size_t cstr_remove_str(char *base, const char *pattern);
 // The function expects that base, before, and after point to valid string buffers
 // and that base holds enough memory to contain all of the replaced strings.
 size_t cstr_replace_str(char *base, const char *before, const char *after);
+
+// Removes all leading and trailing white space in the provided string.
+// The function expects that str points to a valid character buffer.
+void cstr_trim(char *str);
