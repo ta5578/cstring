@@ -111,7 +111,7 @@ void cstr_sort(char *str, int order);
 
 // Counts the number of times c occurs in str.
 // The function expects that str points to a valid string buffer.
-size_t cstr_count_ch(const char *str, char c);
+size_t cstr_count_char(const char *str, char c);
 
 // Counts the number of times pattern occurs in str.
 // The function expects that both str and pattern point to valid string buffers.
