@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 3.2)
 project(cstring)
 
+set(CMAKE_C_STANDARD 99)
+
 # Set additional compiler flags and link directories
 if(CMAKE_C_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4 /WX")
