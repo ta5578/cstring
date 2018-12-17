@@ -3,7 +3,7 @@
 An ultra small and portable C99 string utility library.
 
 ## Library Features
-* Extremely lightweight (single header and single source) library. 
+* Extremely lightweight (single header and single source) library.
 * Very fast -- performance tests don't lie :)
 * Consistent, documented, and easy to learn API.
 
@@ -23,7 +23,7 @@ Splitting a string with a token:
 ```
 char **tokens = NULL;
 size_t count = 0;
-if (!cstr_split("this is a sentence", " ", &tokens, &num)) {
+if (!cstr_split("this is a sentence", " ", &tokens, &count)) {
     // handle the error
 }
 
