@@ -10,7 +10,7 @@ typedef struct {
     size_t size, cap;
 } _cstr_arr;
 
-// Append the provided string to the array of strings and report success status 
+// Append the provided string to the array of strings and report success status
 static bool _cstr_arr_append(_cstr_arr *arr, char *elem)
 {
     if (arr->size >= arr->cap) {
@@ -66,28 +66,17 @@ bool cstr_equals(const char *s1, const char *s2)
     return strcmp(s1, s2) == 0;
 }
 
-size_t cstr_app(char *dest, const char *src, size_t count, size_t dest_hint)
+size_t cstr_app(char *dest, const char *src, size_t count)
 {
    assert(dest); assert(src);
-   
-   size_t dest_len = dest_hint == 0 ? strlen(dest) : dest_hint;
- 
-   // if the count is zero, we want to append the entire string
-   // this has the effect of practically making count infinite
-   // or the max bit representation of size_t (1111...111)
-   if (count == 0) {
-       count = (size_t)(~0);
-   } 
 
-   // could be strncpy 
    size_t amnt = 0;
-   dest += dest_len;
    while (amnt < count && *src) {
        *dest++ = *src++;
-       ++amnt; 
+       ++amnt;
    }
    *dest = '\0';
-   return amnt; 
+   return amnt;
 }
 
 bool cstr_is_prefix(const char *base, const char *pre)
@@ -119,7 +108,7 @@ char* cstr_copy(const char *str, size_t count)
 
     char *copy = cstr_alloc(count);
     if (copy) {
-        strncpy(copy, str, count); 
+        strncpy(copy, str, count);
     }
     return copy;
 }
@@ -127,14 +116,14 @@ char* cstr_copy(const char *str, size_t count)
 bool cstr_split(const char *str, const char *token, char ***toks, size_t *count)
 {
     assert(str); assert(token); assert(count);
-   
+
     _cstr_arr tokens = { .arr = NULL, .size = 0, .cap = 0 };
     const size_t tok_size = strlen(token);
-    
+
     char *tok = NULL;
     bool isSuccess = true;
     while ((tok = cstr_find(str, token))) {
-        // copy the string from where we started to where we found the split string 
+        // copy the string from where we started to where we found the split string
         char *n_tok = cstr_copy(str, tok - str);
         if (!n_tok || !_cstr_arr_append(&tokens, n_tok)) {
             isSuccess = false;
@@ -202,7 +191,7 @@ size_t cstr_replace_char(char *str, char before, char after)
 size_t cstr_remove_str(char *base, const char *pattern)
 {
     assert(base); assert(pattern);
-    
+
     if (base == pattern) {
         *base = '\0';
         return 0;
@@ -215,7 +204,7 @@ size_t cstr_remove_str(char *base, const char *pattern)
     if (pat_len == 1) {
         return cstr_remove_char(base, *pattern);
     }
-    
+
     // TODO: possible performance enhancement:
     // consider checking if len(base) < len(pattern) and exit early
 
@@ -224,7 +213,7 @@ size_t cstr_remove_str(char *base, const char *pattern)
     while ((tok = cstr_find(base, pattern))) {
         // TODO: it is possible to optimize this by updating the length
         // instead of repeatedly polling for it
-        size_t tail_len = strlen(tok); 
+        size_t tail_len = strlen(tok);
         memmove(tok, tok + pat_len, tail_len);
         base = tok;
         ++count;
@@ -235,7 +224,7 @@ size_t cstr_remove_str(char *base, const char *pattern)
 size_t cstr_replace_str(char *base, const char *before, const char *after)
 {
     assert(base); assert(before); assert(after);
-    
+
     size_t b_len = 0, a_len = 0;
     // if the before and after string are equal, then there's no work to do
     if (_cstr_cmp_lens(before, after, &b_len, &a_len)) {
@@ -284,7 +273,7 @@ size_t cstr_replace_str(char *base, const char *before, const char *after)
 void cstr_trim(char *str)
 {
     assert(str);
-    
+
     char *start = str;
     while (isspace(*start)) { ++start; }
 
@@ -298,7 +287,7 @@ void cstr_trim(char *str)
 }
 
 void cstr_sort(char *str, int order)
-{ 
+{
     size_t table[256];
     memset(table, 0, 256 * sizeof(table[0]));
 
@@ -342,7 +331,7 @@ size_t cstr_count_str(const char *str, const char *pattern)
     }
 
     if (pat_len == 1) {
-        return cstr_count_char(str, *pattern);    
+        return cstr_count_char(str, *pattern);
     }
 
     size_t count = 0;

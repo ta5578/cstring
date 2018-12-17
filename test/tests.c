@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void TestAppendEntireStringNoHint(CuTest *c)
+void TestAppendEntireString(CuTest *c)
 {
     const char *str = "testing";
     size_t len1 = strlen(str);
@@ -11,14 +11,14 @@ void TestAppendEntireStringNoHint(CuTest *c)
     size_t len2 = strlen(other);
 
     char *buf = cstr_alloc(len1 + len2);
-    size_t appended = cstr_app(buf, other, 0, 0);
+    size_t appended = cstr_app(buf, other, len2);
 
     CuAssertStrEquals(c, "tamer", buf);
     CuAssertTrue(c, strlen(buf) == len2);
     CuAssertTrue(c, appended == len2);
 }
 
-void TestAppendSubStringNoHint(CuTest *c)
+void TestAppendSubString(CuTest *c)
 {
     const char *str = "testing";
     size_t len1 = strlen(str);
@@ -26,43 +26,26 @@ void TestAppendSubStringNoHint(CuTest *c)
     size_t len2 = strlen(other);
 
     char *buf = cstr_alloc(len1 + len2);
-    size_t appended = cstr_app(buf, other, 2, 0);
+    size_t appended = cstr_app(buf, other, 2);
 
     CuAssertStrEquals(c, "ta", buf);
     CuAssertTrue(c, strlen(buf) == 2);
     CuAssertTrue(c, appended == 2);
 }
 
-void TestAppendEntireStringWithHint(CuTest *c)
+void TestAppendSubStringZeroLength(CuTest *c)
 {
     const char *str = "testing";
     size_t len1 = strlen(str);
-    const char *other = "tamer";
+    const char *other = "";
     size_t len2 = strlen(other);
 
     char *buf = cstr_alloc(len1 + len2);
-    strcpy(buf, str);
-    size_t appended = cstr_app(buf, other, 0, len1);
+    size_t appended = cstr_app(buf, other, len2);
 
-    CuAssertStrEquals(c, "testingtamer", buf);
-    CuAssertTrue(c, strlen(buf) == len1 + len2);
-    CuAssertTrue(c, appended == len2);
-}
-
-void TestAppendSubStringWithHint(CuTest *c)
-{
-    const char *str = "testing";
-    size_t len1 = strlen(str);
-    const char *other = "tamer";
-    size_t len2 = strlen(other);
-
-    char *buf = cstr_alloc(len1 + len2);
-    strcpy(buf, str);
-    size_t appended = cstr_app(buf, other, 3, len1);
-
-    CuAssertStrEquals(c, "testingtam", buf);
-    CuAssertTrue(c, strlen(buf) == len1 + 3);
-    CuAssertTrue(c, appended == 3);
+    CuAssertStrEquals(c, "", buf);
+    CuAssertTrue(c, strlen(buf) == 0);
+    CuAssertTrue(c, appended == 0);
 }
 
 void TestAppendSubStringWithCountGreaterThanStringLength(CuTest *c)
@@ -74,7 +57,7 @@ void TestAppendSubStringWithCountGreaterThanStringLength(CuTest *c)
 
     char *buf = cstr_alloc(len1 + len2);
     strcpy(buf, str);
-    size_t appended = cstr_app(buf, other, 10, len1);
+    size_t appended = cstr_app(buf + len1, other, len2 + 2);
 
     CuAssertStrEquals(c, "testingtamer", buf);
     CuAssertTrue(c, strlen(buf) == len1 + len2);
@@ -131,7 +114,7 @@ void TestSplitStringBySpaces(CuTest *c)
     char **tokens = NULL;
     CuAssertTrue(c, cstr_split("this is a sentence", " ", &tokens, &count));
 
-    CuAssertIntEquals(c, 4, count); 
+    CuAssertIntEquals(c, 4, count);
     CuAssertStrEquals(c, "this", tokens[0]);
     CuAssertStrEquals(c, "is", tokens[1]);
     CuAssertStrEquals(c, "a", tokens[2]);
@@ -149,7 +132,7 @@ void TestSplitStringUsingStringNotExisting(CuTest *c)
     char **tokens = NULL;
     CuAssertTrue(c, cstr_split("this is a sentence", "xyz", &tokens, &count));
 
-    CuAssertIntEquals(c, 0, count); 
+    CuAssertIntEquals(c, 0, count);
     CuAssertPtrEquals(c, NULL, tokens);
 }
 
@@ -159,7 +142,7 @@ void TestSplitStringByContainingCharacter(CuTest *c)
     char **tokens = NULL;
     CuAssertTrue(c, cstr_split("cstring", "t", &tokens, &count));
 
-    CuAssertIntEquals(c, 2, count); 
+    CuAssertIntEquals(c, 2, count);
     CuAssertStrEquals(c, "cs", tokens[0]);
     CuAssertStrEquals(c, "ring", tokens[1]);
 
@@ -175,7 +158,7 @@ void TestSplitStringByNonContainingCharacter(CuTest *c)
     char **tokens = NULL;
     CuAssertTrue(c, cstr_split("cstring", "x", &tokens, &count));
 
-    CuAssertIntEquals(c, 0, count); 
+    CuAssertIntEquals(c, 0, count);
     CuAssertPtrEquals(c, NULL, tokens);
 }
 
@@ -185,9 +168,9 @@ void TestSplitStringByItself_ShouldReturnArrayOf1String(CuTest *c)
     char **tokens = NULL;
     CuAssertTrue(c, cstr_split("cstring", "cstring", &tokens, &count));
 
-    CuAssertIntEquals(c, 1, count); 
+    CuAssertIntEquals(c, 1, count);
     CuAssertStrEquals(c, "cstring", tokens[0]);
-    
+
     for (size_t i = 0; i < count; ++i) {
         free(tokens[i]);
     }
@@ -226,7 +209,7 @@ void TestReplaceCharacterExistingInString(CuTest *c)
 {
     char test[] = "abc";
     CuAssertIntEquals(c, 1, cstr_replace_char(test, 'a', 'x'));
-    
+
     CuAssertStrEquals(c, "xbc", test);
 }
 
@@ -234,7 +217,7 @@ void TestReplaceCharacterNotExistingInString(CuTest *c)
 {
     char test[] = "abc";
     CuAssertIntEquals(c, 0, cstr_replace_char(test, 'u', 'r'));
-    
+
     CuAssertStrEquals(c, "abc", test);
 }
 
@@ -242,7 +225,7 @@ void TestReplaceExistingCharacterWithItself(CuTest *c)
 {
     char test[] = "abc";
     CuAssertIntEquals(c, 0, cstr_replace_char(test, 'a', 'a'));
-    
+
     CuAssertStrEquals(c, "abc", test);
 }
 
@@ -250,7 +233,7 @@ void TestReplaceNonExistingCharacterWithItself(CuTest *c)
 {
     char test[] = "abc";
     CuAssertIntEquals(c, 0, cstr_replace_char(test, 'x', 'x'));
-    
+
     CuAssertStrEquals(c, "abc", test);
 }
 
@@ -406,14 +389,14 @@ void TestTrimTrailingSpacesFromString(CuTest *c)
     char test[] = "this is a test.      ";
     cstr_trim(test);
     CuAssertStrEquals(c, "this is a test.", test);
-} 
+}
 
 void TestTrimLeadingAndTrailingSpacesFromString(CuTest *c)
 {
     char test[] = "    this is a test.      ";
     cstr_trim(test);
     CuAssertStrEquals(c, "this is a test.", test);
-} 
+}
 
 void TestTrimSpacesFromEmptyString(CuTest *c)
 {
